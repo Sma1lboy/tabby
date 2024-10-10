@@ -32,7 +32,20 @@ pub struct Config {
     pub answer: AnswerConfig,
 
     #[serde(default)]
-    pub additional_languages: Vec<languages::Language>,
+    pub additional_languages: AdditionalLanguages,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[serde(transparent)]
+pub struct AdditionalLanguages(pub Vec<languages::Language>);
+
+impl AdditionalLanguages {
+    pub fn lang(&self) -> &Vec<languages::Language> {
+        &self.0
+    }
+    pub fn lang_mut(&mut self) -> &mut Vec<languages::Language> {
+        &mut self.0
+    }
 }
 
 impl Config {
