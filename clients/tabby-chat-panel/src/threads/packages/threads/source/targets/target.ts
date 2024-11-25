@@ -338,25 +338,35 @@ export function createThread<
 
   function handlerForCall(property: string | number | symbol) {
     return (...args: any[]) => {
-      if (
-        terminated ||
-        (typeof property !== 'string' && typeof property !== 'number')
-      ) {
-        return Promise.resolve(undefined);
-      }
+      try {
+        if (terminated) {
+          throw new ThreadTerminatedError();
+        }
 
-      if (property === 'hasCapability') {
-        const methodToCheck = args[0];
+        if (typeof property !== 'string' && typeof property !== 'number') {
+          throw new Error(
+            `Can’t call a symbol method on a thread: ${property.toString()}`,
+          );
+        }
+
+        // hasCapability is a special method that checks if a method is exposed on the other thread
+        if (property === 'hasCapability') {
+          const methodToCheck = args[0];
+          const id = uuid();
+          const done = waitForResult(id);
+          send(CHECK_CAPABILITY, [id, methodToCheck]);
+          return done;
+        }
+
+        //normal call
         const id = uuid();
         const done = waitForResult(id);
-        send(CHECK_CAPABILITY, [id, methodToCheck]);
+        const [encoded, transferables] = encoder.encode(args, encoderApi);
+        send(CALL, [id, property, encoded], transferables);
         return done;
+      } catch (error) {
+        return Promise.reject(error);
       }
-      const id = uuid();
-      const done = waitForResult(id);
-      const [encoded, transferables] = encoder.encode(args, encoderApi);
-      send(CALL, [id, property, encoded], transferables);
-      return done;
     };
   }
 
