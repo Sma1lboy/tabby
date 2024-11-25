@@ -1,0 +1,286 @@
+{
+  "name": "@quilted/quilt",
+  "type": "module",
+  "version": "0.7.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt.git",
+    "directory": "packages/quilt"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@quilted:registry": "https://registry.npmjs.org"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    },
+    "./assets": {
+      "types": "./build/typescript/assets.d.ts",
+      "quilt:source": "./source/assets.ts",
+      "quilt:esnext": "./build/esnext/assets.esnext",
+      "import": "./build/esm/assets.mjs"
+    },
+    "./async": {
+      "types": "./build/typescript/async.d.ts",
+      "quilt:source": "./source/async.ts",
+      "quilt:esnext": "./build/esnext/async.esnext",
+      "import": "./build/esm/async.mjs"
+    },
+    "./browser": {
+      "types": "./build/typescript/browser.d.ts",
+      "quilt:source": "./source/browser.ts",
+      "quilt:esnext": "./build/esnext/browser.esnext",
+      "import": "./build/esm/browser.mjs"
+    },
+    "./browser/testing": {
+      "types": "./build/typescript/browser/testing.d.ts",
+      "quilt:source": "./source/browser/testing.ts",
+      "quilt:esnext": "./build/esnext/browser/testing.esnext",
+      "import": "./build/esm/browser/testing.mjs"
+    },
+    "./context": {
+      "types": "./build/typescript/context.d.ts",
+      "quilt:source": "./source/context.ts",
+      "quilt:esnext": "./build/esnext/context.esnext",
+      "import": "./build/esm/context.mjs"
+    },
+    "./globals": {
+      "types": "./build/typescript/globals.d.ts",
+      "quilt:source": "./source/globals.ts",
+      "quilt:esnext": "./build/esnext/globals.esnext",
+      "import": "./build/esm/globals.mjs"
+    },
+    "./events": {
+      "types": "./build/typescript/events.d.ts",
+      "quilt:source": "./source/events.ts",
+      "quilt:esnext": "./build/esnext/events.esnext",
+      "import": "./build/esm/events.mjs"
+    },
+    "./localize": {
+      "types": "./build/typescript/localize.d.ts",
+      "quilt:source": "./source/localize.ts",
+      "quilt:esnext": "./build/esnext/localize.esnext",
+      "import": "./build/esm/localize.mjs"
+    },
+    "./navigate": {
+      "types": "./build/typescript/navigate.d.ts",
+      "quilt:source": "./source/navigate.ts",
+      "quilt:esnext": "./build/esnext/navigate.esnext",
+      "import": "./build/esm/navigate.mjs"
+    },
+    "./navigate/testing": {
+      "types": "./build/typescript/navigate/testing.d.ts",
+      "quilt:source": "./source/navigate/testing.ts",
+      "quilt:esnext": "./build/esnext/navigate/testing.esnext",
+      "import": "./build/esm/navigate/testing.mjs"
+    },
+    "./performance": {
+      "types": "./build/typescript/performance.d.ts",
+      "quilt:source": "./source/performance.ts",
+      "quilt:esnext": "./build/esnext/performance.esnext",
+      "import": "./build/esm/performance.mjs"
+    },
+    "./signals": {
+      "types": "./build/typescript/signals.d.ts",
+      "quilt:source": "./source/signals.ts",
+      "quilt:esnext": "./build/esnext/signals.esnext",
+      "import": "./build/esm/signals.mjs"
+    },
+    "./testing": {
+      "types": "./build/typescript/testing.d.ts",
+      "quilt:source": "./source/testing.ts",
+      "quilt:esnext": "./build/esnext/testing.esnext",
+      "import": "./build/esm/testing.mjs"
+    },
+    "./graphql": {
+      "types": "./build/typescript/graphql.d.ts",
+      "quilt:source": "./source/graphql.ts",
+      "quilt:esnext": "./build/esnext/graphql.esnext",
+      "import": "./build/esm/graphql.mjs"
+    },
+    "./graphql/server": {
+      "types": "./build/typescript/graphql/server.d.ts",
+      "quilt:source": "./source/graphql/server.ts",
+      "quilt:esnext": "./build/esnext/graphql/server.esnext",
+      "import": "./build/esm/graphql/server.mjs"
+    },
+    "./graphql/testing": {
+      "types": "./build/typescript/graphql/testing.d.ts",
+      "quilt:source": "./source/graphql/testing.ts",
+      "quilt:esnext": "./build/esnext/graphql/testing.esnext",
+      "import": "./build/esm/graphql/testing.mjs"
+    },
+    "./server": {
+      "types": "./build/typescript/server.d.ts",
+      "quilt:source": "./source/server.ts",
+      "quilt:esnext": "./build/esnext/server.esnext",
+      "import": "./build/esm/server.mjs"
+    },
+    "./env": {
+      "types": "./build/typescript/env.d.ts",
+      "quilt:source": "./source/env.ts",
+      "quilt:esnext": "./build/esnext/env.esnext",
+      "import": "./build/esm/env.mjs"
+    },
+    "./request-router": {
+      "types": "./build/typescript/request-router.d.ts",
+      "quilt:source": "./source/request-router.ts",
+      "quilt:esnext": "./build/esnext/request-router.esnext",
+      "import": "./build/esm/request-router.mjs"
+    },
+    "./request-router/node": {
+      "types": "./build/typescript/request-router/node.d.ts",
+      "quilt:source": "./source/request-router/node.ts",
+      "quilt:esnext": "./build/esnext/request-router/node.esnext",
+      "import": "./build/esm/request-router/node.mjs"
+    },
+    "./threads": {
+      "types": "./build/typescript/threads.d.ts",
+      "quilt:source": "./source/threads.ts",
+      "quilt:esnext": "./build/esnext/threads.esnext",
+      "import": "./build/esm/threads.mjs"
+    },
+    "./modules": {
+      "types": "./build/typescript/modules.d.ts",
+      "quilt:source": "./source/modules.ts",
+      "quilt:esnext": "./build/esnext/modules.esnext",
+      "import": "./build/esm/modules.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "assets": [
+        "./build/typescript/assets.d.ts"
+      ],
+      "async": [
+        "./build/typescript/async.d.ts"
+      ],
+      "browser": [
+        "./build/typescript/browser.d.ts"
+      ],
+      "context": [
+        "./build/typescript/context.d.ts"
+      ],
+      "globals": [
+        "./build/typescript/globals.d.ts"
+      ],
+      "env": [
+        "./build/typescript/env.d.ts"
+      ],
+      "events": [
+        "./build/typescript/localize.d.ts"
+      ],
+      "localize": [
+        "./build/typescript/localize.d.ts"
+      ],
+      "navigate": [
+        "./build/typescript/navigate.d.ts"
+      ],
+      "navigate/testing": [
+        "./build/typescript/navigate/testing.d.ts"
+      ],
+      "performance": [
+        "./build/typescript/performance.d.ts"
+      ],
+      "signals": [
+        "./build/typescript/signals.d.ts"
+      ],
+      "graphql": [
+        "./build/typescript/graphql.d.ts"
+      ],
+      "graphql/server": [
+        "./build/typescript/graphql/server.d.ts"
+      ],
+      "graphql/testing": [
+        "./build/typescript/graphql/testing.d.ts"
+      ],
+      "threads": [
+        "./build/typescript/threads.d.ts"
+      ],
+      "server": [
+        "./build/typescript/server.d.ts"
+      ],
+      "request-router/node": [
+        "./build/typescript/request-router/node.d.ts"
+      ],
+      "request-router": [
+        "./build/typescript/request-router/index.d.ts"
+      ],
+      "testing": [
+        "./build/typescript/testing.d.ts"
+      ],
+      "modules": [
+        "./build/typescript/modules.d.ts"
+      ]
+    }
+  },
+  "sideEffects": [
+    "./source/browser.ts",
+    "./build/esnext/browser.esnext",
+    "./build/esm/browser.mjs",
+    "./source/globals.ts",
+    "./build/esnext/globals.esnext",
+    "./build/esm/globals.mjs",
+    "./source/signals.ts",
+    "./build/esnext/signals.esnext",
+    "./build/esm/signals.mjs"
+  ],
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@quilted/assets": "workspace:^0.1.2",
+    "@quilted/async": "workspace:^0.4.2",
+    "@quilted/events": "workspace:^2.0.0",
+    "@quilted/graphql": "workspace:^3.0.3",
+    "@quilted/preact-async": "workspace:^0.1.2",
+    "@quilted/preact-browser": "workspace:^0.1.2",
+    "@quilted/preact-context": "workspace:^0.1.1",
+    "@quilted/preact-graphql": "workspace:^0.1.0",
+    "@quilted/preact-localize": "workspace:^0.1.0",
+    "@quilted/preact-performance": "workspace:^0.1.0",
+    "@quilted/preact-router": "workspace:^0.1.0",
+    "@quilted/preact-signals": "workspace:^0.1.0",
+    "@quilted/preact-workers": "workspace:^0.1.0",
+    "@quilted/preact-testing": "workspace:^0.1.6",
+    "@quilted/react": "workspace:^18.2.0",
+    "@quilted/react-dom": "workspace:^18.2.11",
+    "@quilted/request-router": "workspace:^0.2.0",
+    "@quilted/signals": "workspace:^0.2.0",
+    "@quilted/threads": "workspace:^2.2.0",
+    "preact-render-to-string": "^6.4.0",
+    "jest-matcher-utils": "^29.0.0"
+  },
+  "peerDependencies": {
+    "graphql": "^16.8.0",
+    "preact": "^10.21.0",
+    "prettier": "^2.0.0 || ^3.0.0",
+    "vitest": "^1.6.0"
+  },
+  "peerDependenciesMeta": {
+    "graphql": {
+      "optional": true
+    },
+    "preact": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "expect": "^29.0.0",
+    "preact": "^10.21.0",
+    "prettier": "^3.2.0",
+    "vitest": "^1.6.0"
+  }
+}

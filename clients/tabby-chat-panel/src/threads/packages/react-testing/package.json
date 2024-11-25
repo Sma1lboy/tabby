@@ -1,0 +1,105 @@
+{
+  "name": "@quilted/react-testing",
+  "type": "module",
+  "version": "0.6.10",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt.git",
+    "directory": "packages/react-testing"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@quilted:registry": "https://registry.npmjs.org"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
+    },
+    "./dom": {
+      "types": "./build/typescript/implementations/react-dom.d.ts",
+      "quilt:source": "./source/implementations/react-dom.ts",
+      "quilt:esnext": "./build/esnext/implementations/react-dom.esnext",
+      "import": "./build/esm/implementations/react-dom.mjs",
+      "require": "./build/cjs/implementations/react-dom.cjs"
+    },
+    "./environment": {
+      "types": "./build/typescript/environment.d.ts",
+      "quilt:source": "./source/environment.tsx",
+      "quilt:esnext": "./build/esnext/environment.esnext",
+      "import": "./build/esm/environment.mjs",
+      "require": "./build/cjs/environment.cjs"
+    },
+    "./matchers": {
+      "types": "./build/typescript/matchers.d.ts",
+      "quilt:source": "./source/matchers.ts",
+      "quilt:esnext": "./build/esnext/matchers.esnext",
+      "import": "./build/esm/matchers.mjs",
+      "require": "./build/cjs/matchers.cjs"
+    },
+    "./preact": {
+      "types": "./build/typescript/implementations/react-dom.d.ts",
+      "quilt:source": "./source/preact.ts",
+      "quilt:esnext": "./build/esnext/preact.esnext",
+      "import": "./build/esm/preact.mjs",
+      "require": "./build/cjs/preact.cjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "dom": [
+        "./build/typescript/implementations/react-dom.d.ts"
+      ],
+      "environment": [
+        "./build/typescript/environment.d.ts"
+      ],
+      "matchers": [
+        "./build/typescript/matchers.d.ts"
+      ],
+      "preact": [
+        "./build/typescript/implementations/react-dom.d.ts"
+      ]
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@quilted/preact-testing": "workspace:^0.1.7",
+    "jest-matcher-utils": "^27.0.0"
+  },
+  "devDependencies": {
+    "@types/react-test-renderer": "^18.0.0",
+    "expect": "^29.0.0",
+    "preact": "^10.21.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-test-renderer": "^18.2.0"
+  },
+  "peerDependencies": {
+    "preact": "^10.21.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-test-renderer": "^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "preact": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "react-test-renderer": {
+      "optional": true
+    }
+  }
+}

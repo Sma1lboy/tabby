@@ -1,0 +1,11 @@
+type Person {
+  name: String!
+}
+
+type Query {
+  me: Person!
+}
+
+schema {
+  query: Query
+}

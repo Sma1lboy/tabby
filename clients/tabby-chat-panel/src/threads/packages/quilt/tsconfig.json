@@ -1,0 +1,32 @@
+{
+  "extends": "@quilted/typescript/tsconfig.project.json",
+  "compilerOptions": {
+    "rootDir": "source",
+    "outDir": "build/typescript",
+    "jsxImportSource": "preact"
+  },
+  "include": ["source"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+  "references": [
+    {"path": "../assets"},
+    {"path": "../async"},
+    {"path": "../events"},
+    {"path": "../graphql"},
+    {"path": "../preact-async"},
+    {"path": "../preact-browser"},
+    {"path": "../preact-context"},
+    {"path": "../preact-graphql"},
+    {"path": "../preact-localize"},
+    {"path": "../preact-performance"},
+    {"path": "../preact-router"},
+    {"path": "../preact-signals"},
+    {"path": "../preact-workers"},
+    {"path": "../react"},
+    {"path": "../react-dom"},
+    {"path": "../react-testing"},
+    {"path": "../request-router"},
+    {"path": "../signals"},
+    {"path": "../threads"},
+    {"path": "../workers"}
+  ]
+}

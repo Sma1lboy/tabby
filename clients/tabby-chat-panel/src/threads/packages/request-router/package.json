@@ -1,0 +1,50 @@
+{
+  "name": "@quilted/request-router",
+  "type": "module",
+  "version": "0.2.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt.git",
+    "directory": "packages/request-router"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@quilted:registry": "https://registry.npmjs.org"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    },
+    "./node": {
+      "types": "./build/typescript/node/index.d.ts",
+      "quilt:source": "./source/node/index.ts",
+      "quilt:esnext": "./build/esnext/node/index.esnext",
+      "import": "./build/esm/node/index.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "node": [
+        "./build/typescript/node/index.d.ts"
+      ]
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@quilted/http": "workspace:^0.3.0",
+    "@quilted/routing": "workspace:^0.3.0",
+    "send": "^0.17.0"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.4.0",
+    "@types/send": "^0.17.0"
+  }
+}

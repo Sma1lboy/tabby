@@ -1,0 +1,44 @@
+{
+  "name": "@quilted/cli-kit",
+  "description": "Utilities for creating simple Node-based CLIs",
+  "type": "module",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "@quilted/registry": "https://registry.npmjs.org"
+  },
+  "version": "0.2.0",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt",
+    "directory": "packages/cli-kit"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@quilted/events": "workspace:^2.0.0",
+    "@types/common-tags": "^1.8.1",
+    "@types/glob": "^8.0.0",
+    "@types/prompts": "^2.4.1",
+    "arg": "^5.0.2",
+    "colorette": "^2.0.19",
+    "glob": "^8.0.3",
+    "common-tags": "^1.8.2",
+    "pkg-dir": "^7.0.0",
+    "prompts": "^2.4.2"
+  }
+}

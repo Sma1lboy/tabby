@@ -1,0 +1,15 @@
+{
+  "name": "template-server-basic",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "rollup --config ./rollup.config.js"
+  },
+  "devDependencies": {
+    "@quilted/quilt": "^0.6.0"
+  },
+  "browserslist": [
+    "current node version"
+  ]
+}

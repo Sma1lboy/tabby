@@ -1,0 +1,6 @@
+build/
+node_modules/
+.quilt/
+packages/*/bin/
+tests/e2e/output/
+pnpm-lock.yaml

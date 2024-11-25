@@ -1,0 +1,11 @@
+{
+  "extends": "@quilted/typescript/tsconfig.project.json",
+  "compilerOptions": {
+    "rootDir": "source",
+    "outDir": "build/typescript",
+    "lib": ["ESNext", "DOM", "WebWorker"]
+  },
+  "include": ["source"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+  "references": [{"path": "../threads"}]
+}

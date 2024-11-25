@@ -1,0 +1,15 @@
+{
+  "name": "e2e-fixture-basic-api",
+  "private": true,
+  "version": "0.0.43",
+  "type": "module",
+  "main": "./api.ts",
+  "scripts": {
+    "build": "rollup --config ./rollup.config.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@quilted/quilt": "workspace:*",
+    "typescript": "^5.4.0"
+  }
+}

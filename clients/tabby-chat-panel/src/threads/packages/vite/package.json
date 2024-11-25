@@ -1,0 +1,77 @@
+{
+  "name": "@quilted/vite",
+  "type": "module",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "@quilted/registry": "https://registry.npmjs.org"
+  },
+  "version": "0.1.21",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt.git",
+    "directory": "packages/vite"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    },
+    "./app": {
+      "types": "./build/typescript/app.d.ts",
+      "quilt:source": "./source/app.ts",
+      "quilt:esnext": "./build/esnext/app.esnext",
+      "import": "./build/esm/app.mjs"
+    },
+    "./package": {
+      "types": "./build/typescript/package.d.ts",
+      "quilt:source": "./source/package.ts",
+      "quilt:esnext": "./build/esnext/package.esnext",
+      "import": "./build/esm/package.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "app": [
+        "./build/typescript/app.d.ts"
+      ],
+      "package": [
+        "./build/typescript/package.d.ts"
+      ]
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.23.0",
+    "@prefresh/vite": "^2.4.4",
+    "@quilted/babel": "workspace:^0.2.2",
+    "@quilted/rollup": "workspace:^0.2.28",
+    "@quilted/request-router": "workspace:^0.2.0"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.20.4",
+    "vite": "^5.2.11",
+    "vitest": "^1.6.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "e2e-fixture-empty-app",
+  "private": true,
+  "version": "0.0.43",
+  "type": "module",
+  "scripts": {
+    "build": "rollup --config rollup.config.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@quilted/quilt": "workspace:*",
+    "react": "workspace:@quilted/react@*",
+    "react-dom": "workspace:@quilted/react-dom@*",
+    "typescript": "^5.4.0"
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module-dynamic-import"
+  ]
+}

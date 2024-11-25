@@ -1,0 +1,13 @@
+{
+  "extends": "@quilted/typescript/tsconfig.project.json",
+  "compilerOptions": {
+    "rootDir": "source",
+    "outDir": "build/typescript"
+  },
+  "include": ["source"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+  "references": [
+    {"path": "../../packages/quilt"},
+    {"path": "../../packages/rollup"}
+  ]
+}

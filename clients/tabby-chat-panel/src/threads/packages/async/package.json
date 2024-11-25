@@ -1,0 +1,34 @@
+{
+  "name": "@quilted/async",
+  "type": "module",
+  "version": "0.4.2",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt.git",
+    "directory": "packages/async"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@quilted:registry": "https://registry.npmjs.org"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@quilted/assets": "workspace:^0.1.0",
+    "@quilted/events": "workspace:^2.0.0",
+    "@quilted/signals": "workspace:^0.2.0",
+    "@types/web": "^0.0.59"
+  }
+}

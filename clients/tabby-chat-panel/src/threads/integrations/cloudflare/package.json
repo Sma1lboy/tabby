@@ -1,0 +1,75 @@
+{
+  "name": "@quilted/cloudflare",
+  "type": "module",
+  "version": "0.3.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt.git",
+    "directory": "integrations/cloudflare"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@quilted:registry": "https://registry.npmjs.org"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    },
+    "./craft": {
+      "types": "./build/typescript/craft.d.ts",
+      "quilt:source": "./source/craft.ts",
+      "quilt:esnext": "./build/esnext/craft.esnext",
+      "import": "./build/esm/craft.mjs"
+    },
+    "./request-router": {
+      "types": "./build/typescript/request-router.d.ts",
+      "quilt:source": "./source/request-router.tsx",
+      "quilt:esnext": "./build/esnext/request-router.esnext",
+      "import": "./build/esm/request-router.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "craft": [
+        "./build/typescript/craft.d.ts"
+      ],
+      "request-router": [
+        "./build/typescript/request-router.d.ts"
+      ]
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20221111.1",
+    "@cloudflare/kv-asset-handler": "^0.3.0",
+    "common-tags": "^1.8.0",
+    "mime": "^2.5.0",
+    "miniflare": "^2.4.0"
+  },
+  "peerDependencies": {
+    "@quilted/quilt": "workspace:^0.7.4",
+    "@quilted/rollup": "workspace:^0.2.28"
+  },
+  "peerDependenciesMeta": {
+    "@quilted/quilt": {
+      "optional": true
+    },
+    "@quilted/rollup": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@quilted/quilt": "workspace:*",
+    "@quilted/rollup": "workspace:*",
+    "@types/common-tags": "^1.8.0",
+    "@types/mime": "^2.0.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@quilted/events",
+  "description": "Tiny helpers for working with events in any JavaScript environment",
+  "type": "module",
+  "version": "2.0.0",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemonmade/quilt",
+    "directory": "packages/events"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@lemonmade:registry": "https://registry.npmjs.org"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "quilt:source": "./source/index.ts",
+      "quilt:esnext": "./build/esnext/index.esnext",
+      "import": "./build/esm/index.mjs"
+    }
+  },
+  "types": "./build/typescript/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup --config configuration/rollup.config.js"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "template-module",
+  "type": "module",
+  "exports": {
+    ".": "./module.ts"
+  },
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rollup --config ./rollup.config.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "browserslist": [
+    "defaults and fully supports es6-module"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "@quilted/typescript/tsconfig.project.json",
+  "compilerOptions": {
+    "outDir": "build/typescript",
+    "jsxImportSource": "preact"
+  },
+  "include": ["**/*"],
+  "exclude": ["build"],
+  "references": [{"path": "../../common"}]
+}

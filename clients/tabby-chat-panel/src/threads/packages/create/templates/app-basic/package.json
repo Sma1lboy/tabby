@@ -1,0 +1,38 @@
+{
+  "name": "template-app-basic",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rollup --config ./rollup.config.js",
+    "develop": "vite --config ./vite.config.js",
+    "test": "vitest --config ./vite.config.js",
+    "start": "node ./build/server/server.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@quilted/quilt": "^0.7.0",
+    "jsdom": "^24.0.0",
+    "preact": "^10.21.0",
+    "react": "npm:@quilted/react@^18.2.0",
+    "react-dom": "npm:@quilted/react-dom@^18.2.0"
+  },
+  "sideEffects": [
+    "*.css",
+    "browser.tsx"
+  ],
+  "browserslist": {
+    "defaults": [
+      "defaults and not dead"
+    ],
+    "modules": [
+      "defaults and fully supports es6-module-dynamic-import"
+    ],
+    "evergreen": [
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 edge version",
+      "last 1 chrome version"
+    ]
+  }
+}
