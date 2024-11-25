@@ -68,6 +68,7 @@ const TERMINATE = 2;
 const RELEASE = 3;
 const FUNCTION_APPLY = 5;
 const FUNCTION_RESULT = 6;
+const CHECK_CAPABILITY = 7;
 
 interface MessageMap {
   [CALL]: [string, string | number, any];
@@ -76,6 +77,7 @@ interface MessageMap {
   [RELEASE]: [string];
   [FUNCTION_APPLY]: [string, string, any];
   [FUNCTION_RESULT]: [string, Error?, any?];
+  [CHECK_CAPABILITY]: [string, string];
 }
 
 type MessageData = {
@@ -325,32 +327,36 @@ export function createThread<
 
         break;
       }
+      case CHECK_CAPABILITY: {
+        const [id, methodToCheck] = data[1];
+        const hasMethod = activeApi.has(methodToCheck);
+        send(RESULT, [id, undefined, encoder.encode(hasMethod, encoderApi)[0]]);
+        break;
+      }
     }
   }
 
   function handlerForCall(property: string | number | symbol) {
     return (...args: any[]) => {
-      try {
-        if (terminated) {
-          throw new ThreadTerminatedError();
-        }
+      if (
+        terminated ||
+        (typeof property !== 'string' && typeof property !== 'number')
+      ) {
+        return Promise.resolve(undefined);
+      }
 
-        if (typeof property !== 'string' && typeof property !== 'number') {
-          throw new Error(
-            `Can’t call a symbol method on a thread: ${property.toString()}`,
-          );
-        }
-
+      if (property === 'hasCapability') {
+        const methodToCheck = args[0];
         const id = uuid();
         const done = waitForResult(id);
-        const [encoded, transferables] = encoder.encode(args, encoderApi);
-
-        send(CALL, [id, property, encoded], transferables);
-
+        send(CHECK_CAPABILITY, [id, methodToCheck]);
         return done;
-      } catch (error) {
-        return Promise.reject(error);
       }
+      const id = uuid();
+      const done = waitForResult(id);
+      const [encoded, transferables] = encoder.encode(args, encoderApi);
+      send(CALL, [id, property, encoded], transferables);
+      return done;
     };
   }
 
