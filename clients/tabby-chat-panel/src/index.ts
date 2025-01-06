@@ -212,7 +212,7 @@ export interface GitRepository {
 export type ChatCommand = 'explain' | 'fix' | 'generate-docs' | 'generate-tests'
 
 /**
- * Represents a file reference (file path plus an optional 1-based line range) for retrieving file content.
+ * Represents a file reference for retrieving file content.
  * If `range` is not provided, the entire file is considered.
  */
 export interface FileRange {
@@ -365,7 +365,7 @@ export function createClient(target: HTMLIFrameElement, api: ClientApiMethods): 
       readWorkspaceGitRepositories: api.readWorkspaceGitRepositories,
       getActiveEditorSelection: api.getActiveEditorSelection,
       provideFileAtInfo: api.listFileInWorkspace,
-      provideRangeContent: api.readFileContent,
+      readFileContent: api.readFileContent,
     },
   })
 }
