@@ -222,17 +222,40 @@ export enum SymbolKind {
 }
 
 /**
- * Represent determine file content by given range
- * @param range if range is not provided, the whole file is considered
+ * Represents a file reference (with name, path, and an optional line range) for retrieving file content.
+ * If `range` is not provided, the entire file is considered.
  */
 export interface FileInfo {
+  /**
+   * The name of the file.
+   */
   filename: string
+
+  /**
+   * A {@link Filepath} identifying the location of the file.
+   */
   filepath: Filepath
-  // line range of the file, it will be 1-based line number
+
+  /**
+   * A 1-based line range specifying a subset of the file content.
+   */
   range?: LineRange
 }
 
-export interface AtInputOpts { query?: string, limit?: number }
+/**
+ * Defines optional parameters used to filter or limit the results of a file query.
+ */
+export interface AtInputOpts {
+  /**
+   * A search query string for filtering results.
+   */
+  query?: string
+
+  /**
+   * The maximum number of results to return.
+   */
+  limit?: number
+}
 
 export interface ServerApi {
   init: (request: InitRequest) => void
@@ -303,16 +326,17 @@ export interface ClientApiMethods {
   getActiveEditorSelection: () => Promise<EditorFileContext | null>
 
   /**
-   * Return a FileAtInfo List with kind of file
-   * @param kind passing what kind of At info client want to get
-   * @returns FileAtInfo array
+   * Returns a list of file information matching the specified query.
+   * @param opts An optional {@link AtInputOpts} object that includes a search query and a limit for the results.
+   * @returns An array of {@link FileInfo} objects, or `null` if no matching files are found.
    */
   provideFileAtInfo?: (opts?: AtInputOpts) => Promise<FileInfo[] | null>
 
   /**
-   * Return the range of content in the file
-   * @param info context to determine the content range
-   * @returns the content of the range
+   * Returns the content of a file within the specified range.
+   * If `range` is not provided, the entire file content is returned.
+   * @param info A {@link FileInfo} object that includes the file path and optionally a 1-based line range.
+   * @returns The content of the file as a string, or `null` if the file or range cannot be accessed.
    */
   provideRangeContent?: (info: FileInfo) => Promise<string | null>
 }
