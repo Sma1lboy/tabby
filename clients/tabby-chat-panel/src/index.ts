@@ -221,27 +221,14 @@ export enum SymbolKind {
   File = 0,
 }
 
-// keep this for later if we want refactor to generic functions
-export type AtInfo = SymbolAtInfo | FileAtInfo
-
-/**
- * Represents as Symbol At Info in the file.
- */
-export interface SymbolAtInfo {
-  // this means trying to query symbol in this at action
-  // it's different then actual SymbolKind
-  atKind: 'symbol'
-  name: string
-  location: FileLocation
-}
-
 /**
  * Represents as File At Info in the file.
  */
-export interface FileAtInfo {
-  atKind: 'file'
-  name: string
+export interface FileInfo {
+  filename: string
   filepath: Filepath
+  // line range of the file, it will be 1-based line number
+  range?: LineRange
 }
 
 export interface AtInputOpts { query?: string, limit?: number }
@@ -315,17 +302,18 @@ export interface ClientApiMethods {
   getActiveEditorSelection: () => Promise<EditorFileContext | null>
 
   /**
- * Return a SymbolAtInfo List with kind of file
+ * Return a FileAtInfo List with kind of file
  * @param kind passing what kind of At info client want to get
- * @returns SymbolAtInfo array
+ * @returns FileAtInfo array
  */
-  provideSymbolAtInfo?: (opts?: AtInputOpts) => Promise<SymbolAtInfo[] | null>
+  provideFileAtInfo?: (opts?: AtInputOpts) => Promise<FileInfo[] | null>
 
-  getSymbolAtInfoContent?: (info: SymbolAtInfo) => Promise<string | null>
-
-  provideFileAtInfo?: (opts?: AtInputOpts) => Promise<FileAtInfo[] | null>
-
-  getFileAtInfoContent?: (info: FileAtInfo) => Promise<string | null>
+  /**
+   * Return the range of content in the file
+   * @param info context to determine the content range
+   * @returns the content of the range
+   */
+  provideRangeContent?: (info: FileInfo) => Promise<string | null>
 }
 
 export interface ClientApi extends ClientApiMethods {
@@ -351,10 +339,8 @@ export function createClient(target: HTMLIFrameElement, api: ClientApiMethods): 
       openExternal: api.openExternal,
       readWorkspaceGitRepositories: api.readWorkspaceGitRepositories,
       getActiveEditorSelection: api.getActiveEditorSelection,
-      provideSymbolAtInfo: api.provideSymbolAtInfo,
-      getSymbolAtInfoContent: api.getSymbolAtInfoContent,
       provideFileAtInfo: api.provideFileAtInfo,
-      getFileAtInfoContent: api.getFileAtInfoContent,
+      provideRangeContent: api.provideRangeContent,
     },
   })
 }
