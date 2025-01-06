@@ -364,7 +364,7 @@ export function createClient(target: HTMLIFrameElement, api: ClientApiMethods): 
       openExternal: api.openExternal,
       readWorkspaceGitRepositories: api.readWorkspaceGitRepositories,
       getActiveEditorSelection: api.getActiveEditorSelection,
-      provideFileAtInfo: api.listFileInWorkspace,
+      listFileInWorkspace: api.listFileInWorkspace,
       readFileContent: api.readFileContent,
     },
   })
