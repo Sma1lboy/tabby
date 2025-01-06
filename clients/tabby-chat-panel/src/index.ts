@@ -302,10 +302,10 @@ export interface ClientApiMethods {
   getActiveEditorSelection: () => Promise<EditorFileContext | null>
 
   /**
- * Return a FileAtInfo List with kind of file
- * @param kind passing what kind of At info client want to get
- * @returns FileAtInfo array
- */
+   * Return a FileAtInfo List with kind of file
+   * @param kind passing what kind of At info client want to get
+   * @returns FileAtInfo array
+   */
   provideFileAtInfo?: (opts?: AtInputOpts) => Promise<FileInfo[] | null>
 
   /**
