@@ -222,7 +222,8 @@ export enum SymbolKind {
 }
 
 /**
- * Represents as File At Info in the file.
+ * Represent determine file content by given range
+ * @param range if range is not provided, the whole file is considered
  */
 export interface FileInfo {
   filename: string
