@@ -222,15 +222,10 @@ export enum SymbolKind {
 }
 
 /**
- * Represents a file reference (with name, path, and an optional line range) for retrieving file content.
+ * Represents a file reference (file path plus an optional 1-based line range) for retrieving file content.
  * If `range` is not provided, the entire file is considered.
  */
-export interface FileInfo {
-  /**
-   * The name of the file.
-   */
-  filename: string
-
+export interface FileRange {
   /**
    * A {@link Filepath} identifying the location of the file.
    */
@@ -247,7 +242,7 @@ export interface FileInfo {
  */
 export interface AtInputOpts {
   /**
-   * A search query string for filtering results.
+   * A search query string used for filtering results.
    */
   query?: string
 
@@ -328,17 +323,17 @@ export interface ClientApiMethods {
   /**
    * Returns a list of file information matching the specified query.
    * @param opts An optional {@link AtInputOpts} object that includes a search query and a limit for the results.
-   * @returns An array of {@link FileInfo} objects, or `null` if no matching files are found.
+   * @returns An array of {@link FileRange} objects, or `null` if no matching files are found.
    */
-  provideFileAtInfo?: (opts?: AtInputOpts) => Promise<FileInfo[] | null>
+  listFileInWorkspace?: (opts?: AtInputOpts) => Promise<FileRange[] | null>
 
   /**
    * Returns the content of a file within the specified range.
    * If `range` is not provided, the entire file content is returned.
-   * @param info A {@link FileInfo} object that includes the file path and optionally a 1-based line range.
+   * @param info A {@link FileRange} object that includes the file path and optionally a 1-based line range.
    * @returns The content of the file as a string, or `null` if the file or range cannot be accessed.
    */
-  provideRangeContent?: (info: FileInfo) => Promise<string | null>
+  readFileContent?: (info: FileRange) => Promise<string | null>
 }
 
 export interface ClientApi extends ClientApiMethods {
@@ -364,8 +359,8 @@ export function createClient(target: HTMLIFrameElement, api: ClientApiMethods): 
       openExternal: api.openExternal,
       readWorkspaceGitRepositories: api.readWorkspaceGitRepositories,
       getActiveEditorSelection: api.getActiveEditorSelection,
-      provideFileAtInfo: api.provideFileAtInfo,
-      provideRangeContent: api.provideRangeContent,
+      provideFileAtInfo: api.listFileInWorkspace,
+      provideRangeContent: api.readFileContent,
     },
   })
 }
