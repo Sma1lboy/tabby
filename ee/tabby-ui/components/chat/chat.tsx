@@ -5,7 +5,10 @@ import type {
   EditorContext,
   EditorFileContext,
   FileLocation,
+  FileRange,
   GitRepository,
+  ListFileItem,
+  ListFilesInWorkspaceParams,
   LookupSymbolHint,
   SymbolInfo
 } from 'tabby-chat-panel'
@@ -48,10 +51,6 @@ import {
 import { ChatPanel, ChatPanelRef } from './chat-panel'
 import { ChatScrollAnchor } from './chat-scroll-anchor'
 import { EmptyScreen } from './empty-screen'
-import {
-  extractAtSourceFromString,
-  isFileAtInfo
-} from './prompt-form-editor/utils'
 import { QuestionAnswerList } from './question-answer'
 
 type ChatContextValue = {
@@ -84,8 +83,10 @@ type ChatContextValue = {
   setSelectedRepoId: React.Dispatch<React.SetStateAction<string | undefined>>
   repos: RepositorySourceListQuery['repositoryList'] | undefined
   fetchingRepos: boolean
-  provideFileAtInfo?: (opts?: AtInputOpts) => Promise<FileAtInfo[] | null>
-  getFileAtInfoContent?: (info: FileAtInfo) => Promise<string | null>
+  listFileInWorkspace?: (
+    params: ListFilesInWorkspaceParams
+  ) => Promise<ListFileItem[]>
+  readFileContent?: (info: FileRange) => Promise<string>
 }
 
 export const ChatContext = React.createContext<ChatContextValue>(
@@ -127,6 +128,10 @@ interface ChatProps extends React.ComponentProps<'div'> {
   supportsOnApplyInEditorV2: boolean
   readWorkspaceGitRepositories?: () => Promise<GitRepository[]>
   getActiveEditorSelection?: () => Promise<EditorFileContext | null>
+  listFileInWorkspace?: (
+    params: ListFilesInWorkspaceParams
+  ) => Promise<ListFileItem[]>
+  readFileContent?: (info: FileRange) => Promise<string>
 }
 
 function ChatRenderer(
@@ -150,7 +155,9 @@ function ChatRenderer(
     chatInputRef,
     supportsOnApplyInEditorV2,
     readWorkspaceGitRepositories,
-    getActiveEditorSelection
+    getActiveEditorSelection,
+    listFileInWorkspace,
+    readFileContent
   }: ChatProps,
   ref: React.ForwardedRef<ChatRef>
 ) {
@@ -632,8 +639,8 @@ function ChatRenderer(
         repos,
         fetchingRepos,
         initialized,
-        provideFileAtInfo,
-        getFileAtInfoContent
+        listFileInWorkspace,
+        readFileContent
       }}
     >
       <div className="flex justify-center overflow-x-hidden">

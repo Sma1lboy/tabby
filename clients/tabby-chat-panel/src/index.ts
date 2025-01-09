@@ -211,6 +211,52 @@ export interface GitRepository {
  */
 export type ChatCommand = 'explain' | 'fix' | 'generate-docs' | 'generate-tests'
 
+/**
+ * Represents a file reference for retrieving file content.
+ * If `range` is not provided, the entire file is considered.
+ */
+export interface FileRange {
+  /**
+   * The file path of the file.
+   */
+  filepath: Filepath
+
+  /**
+   * The range of the selected content in the file.
+   * If the range is not provided, the whole file is considered.
+   */
+  range?: LineRange | PositionRange
+}
+
+/**
+ * Defines optional parameters used to filter or limit the results of a file query.
+ */
+export interface ListFilesInWorkspaceParams {
+  /**
+   * The query string to filter the files.
+   * The query string could be an empty string. In this case, we do not read all files in the workspace,
+   * but only list the opened files in the editor.
+   */
+  query: string
+
+  /**
+   * The maximum number of files to list.
+   */
+  limit?: number
+}
+
+export interface ListFileItem {
+  /**
+   * The filepath of the file.
+   */
+  filepath: Filepath
+
+  /**
+   * A relative path to the file in the workspace, intended to be displayed to the user.
+   */
+  label: string
+}
+
 export interface ServerApi {
   init: (request: InitRequest) => void
 
@@ -278,6 +324,21 @@ export interface ClientApiMethods {
    * @returns The active selection of active editor.
    */
   getActiveEditorSelection: () => Promise<EditorFileContext | null>
+
+  /**
+   * Returns a list of file information matching the specified query.
+   * @param params An {@link ListFilesInWorkspaceParams} object that includes a search query and a limit for the results.
+   * @returns An array of {@link ListFileItem} objects that could be empty.
+   */
+  listFileInWorkspace?: (params: ListFilesInWorkspaceParams) => Promise<ListFileItem[]>
+
+  /**
+   * Returns the content of a file within the specified range.
+   * If `range` is not provided, the entire file content is returned.
+   * @param info A {@link FileRange} object that includes the file path and optionally a 1-based line range.
+   * @returns The content of the file as a string, or `null` if the file or range cannot be accessed.
+   */
+  readFileContent?: (info: FileRange) => Promise<string | null>
 }
 
 export interface ClientApi extends ClientApiMethods {
@@ -303,6 +364,8 @@ export function createClient(target: HTMLIFrameElement, api: ClientApiMethods): 
       openExternal: api.openExternal,
       readWorkspaceGitRepositories: api.readWorkspaceGitRepositories,
       getActiveEditorSelection: api.getActiveEditorSelection,
+      listFileInWorkspace: api.listFileInWorkspace,
+      readFileContent: api.readFileContent,
     },
   })
 }

@@ -1,4 +1,5 @@
-import { AtInfo, FileAtInfo } from 'tabby-chat-panel/index'
+import path from 'path'
+import { ListFileItem } from 'tabby-chat-panel/index'
 
 import { MentionNodeAttrs, SourceItem } from './types'
 
@@ -8,37 +9,12 @@ import { MentionNodeAttrs, SourceItem } from './types'
  */
 export const AT_SOURCE_REGEX = /\[\[atSource:(.*?)\]\]/g
 
-/**
- * Type guard to check if the given AtInfo is a FileAtInfo.
- */
-export function isFileAtInfo(atInfo: AtInfo): atInfo is FileAtInfo {
-  return atInfo.atKind === 'file'
-}
-
-/**
- * Convert an AtInfo object into a SourceItem for display and mention.
- * @param info An AtInfo object from tabby-chat-panel
- * @returns A SourceItem containing category, name, filepath, and the raw atInfo
- */
-export function atInfoToSourceItem(info: AtInfo): SourceItem {
-  if (isFileAtInfo(info)) {
-    return {
-      category: 'files' as const,
-      atInfo: info,
-      name: info.name,
-      filepath:
-        'uri' in info.filepath ? info.filepath.uri : info.filepath.filepath
-    }
-  } else {
-    return {
-      category: 'symbols' as const,
-      atInfo: info,
-      name: info.name,
-      filepath:
-        'uri' in info.location.filepath
-          ? info.location.filepath.uri
-          : info.location.filepath.filepath
-    }
+export function listFileItemToSourceItem(info: ListFileItem): SourceItem {
+  return {
+    fileItem: info,
+    name: path.basename(info.label),
+    filepath: info.label,
+    category: 'files'
   }
 }
 
@@ -55,7 +31,7 @@ export function sourceItemToMentionNodeAttrs(
     id: `${item.name}-${item.filepath}`,
     name: item.name,
     category: item.category,
-    atInfo: item.atInfo!
+    fileItem: item.fileItem!
   }
 }
 
@@ -66,20 +42,20 @@ export function sourceItemToMentionNodeAttrs(
  * @returns An object with updated text (after replacement) and a list of extracted AtInfo
  */
 export function extractAtSourceFromString(text: string) {
-  const atInfos: AtInfo[] = []
+  const fileItems: ListFileItem[] = []
   let match
 
   while ((match = AT_SOURCE_REGEX.exec(text))) {
     const sourceData = match[1]
     try {
-      const parsedAtInfo = JSON.parse(sourceData)
-      atInfos.push(parsedAtInfo)
-      text = text.replace(match[0], `@${parsedAtInfo.name}`)
+      const parsedFileItem = JSON.parse(sourceData)
+      fileItems.push(parsedFileItem)
+      text = text.replace(match[0], `@${parsedFileItem.name}`)
     } catch {
       // If JSON parsing fails, skip this match
       continue
     }
   }
 
-  return { text, atInfos }
+  return { text, atInfos: fileItems }
 }

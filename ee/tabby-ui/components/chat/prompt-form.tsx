@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { Editor, Extension } from '@tiptap/core'
+import { Extension } from '@tiptap/core'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -39,7 +39,7 @@ import { cn } from '@/lib/utils'
 
 import { PromptFormMentionExtension } from './prompt-form-editor/mention-extension'
 import {
-  atInfoToSourceItem,
+  listFileItemToSourceItem,
   sourceItemToMentionNodeAttrs
 } from './prompt-form-editor/utils'
 
@@ -61,7 +61,7 @@ function PromptFormRenderer(
 ) {
   const { formRef } = useEnterSubmit()
 
-  const { provideFileAtInfo } = React.useContext(ChatContext)
+  const { listFileInWorkspace } = React.useContext(ChatContext)
 
   const popoverRef = useRef<HTMLDivElement>(null)
   const selectedItemRef = useRef<HTMLButtonElement>(null)
@@ -150,12 +150,15 @@ function PromptFormRenderer(
             const state: MenuState = { view: 'files' }
             setMenuState(state)
             menuStateRef.current = state
+            // eslint-disable-next-line no-console
 
             // If a function is provided to fetch file info, get them and update suggestions
-            if (provideFileAtInfo) {
-              provideFileAtInfo().then(files => {
+            if (listFileInWorkspace) {
+              // hello world
+              listFileInWorkspace({ query: '' }).then(files => {
                 if (!files) return
-                const items = files.map(atInfoToSourceItem)
+                // use fileItemToSourceItem
+                const items = files.map(listFileItemToSourceItem)
                 setSuggestionState(prev =>
                   prev
                     ? {
@@ -189,7 +192,7 @@ function PromptFormRenderer(
         }
       }
     },
-    [provideFileAtInfo]
+    [listFileInWorkspace]
   )
 
   /**
@@ -260,15 +263,17 @@ function PromptFormRenderer(
           char: '@',
           allowSpaces: true,
           items: async ({ query }): Promise<SourceItem[]> => {
-            if (!provideFileAtInfo) return []
+            // eslint-disable-next-line no-console
+            console.log(listFileInWorkspace)
+            if (!listFileInWorkspace) return []
 
             if (menuStateRef.current.view === 'categories') {
               return CATEGORIES_MENU
             }
 
             try {
-              const files = await provideFileAtInfo({ query })
-              return files?.map(atInfoToSourceItem) || []
+              const files = await listFileInWorkspace({ query })
+              return files?.map(listFileItemToSourceItem) || []
             } catch (error) {
               // TODO: handle or log error if needed
               return []

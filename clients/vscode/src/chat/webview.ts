@@ -14,6 +14,7 @@ import {
   ProgressLocation,
   Location,
   LocationLink,
+  TabInputText,
 } from "vscode";
 import { TABBY_CHAT_PANEL_API_VERSION } from "tabby-chat-panel";
 import type {
@@ -26,6 +27,9 @@ import type {
   FileLocation,
   GitRepository,
   EditorFileContext,
+  ListFilesInWorkspaceParams,
+  ListFileItem,
+  FileRange,
 } from "tabby-chat-panel";
 import * as semver from "semver";
 import type { StatusInfo, Config } from "tabby-agent";
@@ -42,6 +46,8 @@ import {
   vscodeRangeToChatPanelPositionRange,
   chatPanelLocationToVSCodeRange,
   isValidForSyncActiveEditorSelection,
+  escapeGlobPattern,
+  uriToListFileItem,
 } from "./utils";
 import mainHtml from "./html/main.html";
 import errorHtml from "./html/error.html";
@@ -455,6 +461,42 @@ export class ChatWebview {
 
         const fileContext = await getFileContextFromSelection(editor, this.gitProvider);
         return fileContext;
+      },
+      listFileInWorkspace: async (params: ListFilesInWorkspaceParams): Promise<ListFileItem[]> => {
+        this.logger.info("Listing files in workspace:", params);
+        const maxResults = params.limit || 50;
+        const query = params.query?.toLowerCase();
+
+        if (!query) {
+          // TODO: check tab file stat, check if exists
+          const openTabs = window.tabGroups.all.flatMap((group) => group.tabs);
+          this.logger.info(`No query provided, listing ${openTabs.length} opened editors.`);
+          return openTabs.map((tab) => uriToListFileItem((tab.input as TabInputText).uri, this.gitProvider));
+        }
+
+        const globPattern = `**/${escapeGlobPattern(query)}*`;
+
+        // validate the glob pattern
+        this.logger.info(`Searching files with pattern: ${globPattern}, limit: ${maxResults}.`);
+        try {
+          const files = await workspace.findFiles(globPattern, null, maxResults);
+          this.logger.info(`Found ${files.length} files.`);
+          return files.map((uri) => uriToListFileItem(uri, this.gitProvider));
+        } catch (error) {
+          this.logger.warn("Failed to find files:", error);
+          window.showErrorMessage("Failed to find files.");
+          return [];
+        }
+      },
+
+      readFileContent: async (info: FileRange): Promise<string | null> => {
+        const uri = chatPanelFilepathToLocalUri(info.filepath, this.gitProvider);
+        if (!uri) {
+          this.logger.warn(`Could not resolve URI from filepath: ${JSON.stringify(info.filepath)}`);
+          return null;
+        }
+        const document = await workspace.openTextDocument(uri);
+        return document.getText(chatPanelLocationToVSCodeRange(info.range) ?? undefined);
       },
     });
   }

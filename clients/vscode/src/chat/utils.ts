@@ -7,6 +7,7 @@ import type {
   PositionRange,
   Location,
   FilepathInGitRepository,
+  ListFileItem,
 } from "tabby-chat-panel";
 import type { GitProvider } from "../git/GitProvider";
 import { getLogger } from "../logger";
@@ -220,4 +221,16 @@ export function generateLocalNotebookCellUri(notebook: Uri, handle: number): Uri
   const p = s.length < nb_lengths.length ? nb_lengths[s.length - 1] : "z";
   const fragment = `${p}${s}s${Buffer.from(notebook.scheme).toString("base64")}`;
   return notebook.with({ scheme: DocumentSchemes.vscodeNotebookCell, fragment });
+}
+
+export function uriToListFileItem(uri: Uri, gitProvider: GitProvider): ListFileItem {
+  return {
+    label: workspace.asRelativePath(uri),
+    filepath: localUriToChatPanelFilepath(uri, gitProvider),
+  };
+}
+
+export function escapeGlobPattern(query: string): string {
+  // escape special glob characters: * ? [ ] { } ( ) ! @
+  return query.replace(/[*?[\]{}()!@]/g, "\\$&");
 }

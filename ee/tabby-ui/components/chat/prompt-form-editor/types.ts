@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { AtInfo } from 'tabby-chat-panel/index'
+
+import { ListFileItem } from 'tabby-chat-panel/index'
 
 /**
  * Types of mention categories, such as files, symbols, or categories.
@@ -30,7 +31,7 @@ export interface SourceItem {
   /**
    * Original 'AtInfo' object, It could be optional if we are in root level
    */
-  atInfo?: AtInfo
+  fileItem?: ListFileItem // ListFileItem for now
 
   /**
    * Name derived from 'atInfo.name'.
@@ -70,7 +71,7 @@ export interface MentionNodeAttrs {
   id: string
   name: string
   category: MentionCategory
-  atInfo: AtInfo // TODO: Consider removing if not needed in final implementation
+  fileItem: ListFileItem // TODO: Consider removing if not needed in final implementation
 }
 
 /**
